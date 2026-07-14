@@ -1,6 +1,11 @@
 # 🤖 Agentic Invoice Processor
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://invoiceagenticproceappr-d7cbxxrkrcxp68bxeobfbp.streamlit.app/)
+
 A beautiful, demo-ready invoice processing system built with **Streamlit** and **LangGraph** (powered by the **Euri AI SDK**) that uses AI agents to extract structured data from invoice images.
+
+**🔗 Live Demo:** [invoiceagenticproceappr-d7cbxxrkrcxp68bxeobfbp.streamlit.app](https://invoiceagenticproceappr-d7cbxxrkrcxp68bxeobfbp.streamlit.app/)
+
 
 ## ✨ Features
 
