@@ -6,4 +6,4 @@ textColor = "#1f2937"
 font = "sans serif"
 
 [server]
-headless = false
+headless = true
