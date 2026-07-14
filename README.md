@@ -7,7 +7,7 @@ A beautiful, demo-ready invoice processing system built with **Streamlit** and *
 **🔗 Live Demo:** [invoiceagenticproceappr-d7cbxxrkrcxp68bxeobfbp.streamlit.app](https://invoiceagenticproceappr-d7cbxxrkrcxp68bxeobfbp.streamlit.app/)
 
 > [!NOTE]
-> **Quota Compatibility Notice**: This repository's default configuration has been migrated to use the **Euri AI SDK** (`euriai`) to ensure free and continuous demo usage without hitting OpenAI API `insufficient_quota` (429) errors.
+> **Quota Compatibility Notice**: This repository's default configuration has been migrated to use the **Euri AI SDK** (`euriai`) to ensure free(for euron plus users) and continuous demo usage without hitting OpenAI API `insufficient_quota` (429) errors.
 > If you have a funded OpenAI developer account, you can easily switch back to standard OpenAI models as originally intended by referencing the project summary and architecture.
 
 ## ✨ Features
