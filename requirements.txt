@@ -1,6 +1,7 @@
 streamlit>=1.28.0
-euriai>=1.0.32
-langgraph
+langgraph>=0.1.0
+langchain>=0.1.0
+langchain-openai>=0.1.0
 easyocr>=1.7.0
 opencv-python-headless>=4.8.0
 pandas>=2.0.0

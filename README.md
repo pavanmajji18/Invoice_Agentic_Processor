@@ -2,16 +2,15 @@
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://invoiceagenticproceappr-d7cbxxrkrcxp68bxeobfbp.streamlit.app/)
 
-A beautiful, demo-ready invoice processing system built with **Streamlit** and **LangGraph** (powered by the **Euri AI SDK**) that uses AI agents to extract structured data from invoice images.
+A beautiful, demo-ready invoice processing system built with **Streamlit** and **LangGraph** (powered by standard **OpenAI APIs**) that uses AI agents to extract structured data from invoice images.
 
 **🔗 Live Demo:** [invoiceagenticproceappr-d7cbxxrkrcxp68bxeobfbp.streamlit.app](https://invoiceagenticproceappr-d7cbxxrkrcxp68bxeobfbp.streamlit.app/)
-
 
 ## ✨ Features
 
 - **🤖 Pure Agentic Architecture**: Built with LangGraph for intelligent, multi-step invoice cleaning and extraction
 - **🔍 OCR Integration**: Uses EasyOCR for text extraction from invoice images
-- **🧠 AI-Powered Cleaning**: Euri AI models correct OCR character errors and restore readable structures
+- **🧠 AI-Powered Cleaning**: OpenAI models correct OCR character errors and restore readable structures
 - **🧩 AI-Powered JSON Extraction**: Automatically parses unstructured cleaned text into a strict JSON schema
 - **✅ Validation**: Verification of critical fields (vendor, date, total, currency format)
 - **💾 SQLite Database**: Persistent storage and querying of processed records
@@ -50,7 +49,7 @@ Inspect any row from the database in detail, showing structured JSON values, spe
 ### Prerequisites
 
 - Python 3.8+
-- Euri AI API key (`EURI_API_KEY`)
+- OpenAI API key (`OPENAI_API_KEY`)
 
 ### Installation
 
@@ -73,7 +72,7 @@ Inspect any row from the database in detail, showing structured JSON values, spe
 4. **Set up environment variables:**
    Create a `.env` file in the project root:
    ```bash
-   EURI_API_KEY=your_euri_api_key_here
+   OPENAI_API_KEY=your_openai_api_key_here
    APP_PASSWORD=optional_access_password
    ```
 
@@ -98,12 +97,12 @@ Inspect any row from the database in detail, showing structured JSON values, spe
 ## 🏗️ Architecture
 
 ### Agentic Workflow
-The system uses LangGraph and the Euri AI SDK to build two specialized node chains:
+The system uses LangGraph and OpenAI to build node chains:
 ```
 OCR Text -> CLEAN AI Node -> EXTRACT AI Node -> SCHEMA VALIDATE -> DATABASE PERSIST -> CONSOLE NOTIFY
 ```
-1. **CLEAN Node**: Corrects noise, character identification mistakes, and preserves details.
-2. **EXTRACT Node**: Translates clean unstructured text into a strict JSON payload.
+1. **CLEAN Node**: Corrects noise, character identification mistakes, and preserves details using standard LLM completion.
+2. **EXTRACT Node**: Translates clean unstructured text into a strict JSON payload using structured completion.
 3. **VALIDATE Node**: Evaluates totals, currencies, and required field completeness.
 
 ### Project Structure
@@ -113,7 +112,7 @@ Invoice_Agentic_Processor/
 ├── run.py                 # Startup script with env variable verification
 ├── screenshots/           # Screenshot images for documentation
 ├── agents/
-│   └── invoice_agent.py   # EuriaiLangGraph agent configuration
+│   └── invoice_agent.py   # LangGraph agent configuration
 ├── utils/
 │   ├── ocr.py             # EasyOCR text reader
 │   └── database.py        # SQLite invoice DB driver
@@ -126,20 +125,19 @@ Invoice_Agentic_Processor/
 ## 🔧 Configuration
 
 ### Model Selection
-You can toggle Euri's models in the sidebar:
-- `gpt-4.1-nano` (default, lightweight and optimized for extraction tasks)
-- `gpt-4o` (highly accurate)
-- `gpt-4o-mini` (cost-effective)
+You can toggle OpenAI's models in the sidebar:
+- `gpt-4o-mini` (default, highly accurate and cost-effective)
+- `gpt-4o` (maximum accuracy)
 - `gpt-3.5-turbo` (fastest)
 
 ### Secrets (Streamlit Cloud Deploy)
 Configure your variables in share.streamlit.io Advanced Settings:
 ```toml
-EURI_API_KEY = "your-api-key"
+OPENAI_API_KEY = "your-api-key"
 APP_PASSWORD = "optional-password"
 ```
 
 ---
 
 ## 📝 License
-This project is open-source and intended for demonstration purposes. Built using **Streamlit, LangGraph, and the Euri AI SDK**.
+This project is open-source and intended for demonstration purposes. Built using **Streamlit, LangGraph, and OpenAI**.
