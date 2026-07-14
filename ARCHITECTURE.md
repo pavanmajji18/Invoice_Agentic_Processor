@@ -646,7 +646,3 @@ In `utils/ocr.py`, you can modify:
    - Modify agent prompts in `invoice_agent.py`
    - Add custom validation rules
    - Extend database schema
-
----
-
-**Built with ❤️ using Streamlit, LangGraph, and OpenAI**
