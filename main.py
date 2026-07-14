@@ -1,5 +1,5 @@
 """
-Streamlit UI for Agentic Invoice Processing (OpenAI & LangGraph powered)
+Streamlit UI for Agentic Invoice Processing (Euri AI powered)
 """
 import streamlit as st
 import os
@@ -253,12 +253,12 @@ def check_password() -> bool:
 # Run security check first
 if check_password():
     
-    # Check OpenAI API key
-    openai_key = os.getenv("OPENAI_API_KEY")
-    if not openai_key:
+    # Check EURI API key
+    euri_key = os.getenv("EURI_API_KEY")
+    if not euri_key:
         try:
-            if "OPENAI_API_KEY" in st.secrets:
-                openai_key = st.secrets["OPENAI_API_KEY"]
+            if "EURI_API_KEY" in st.secrets:
+                euri_key = st.secrets["EURI_API_KEY"]
         except Exception:
             pass
 
@@ -267,25 +267,25 @@ if check_password():
         st.markdown('<div class="sidebar-header">⚙️ Configuration</div>', unsafe_allow_html=True)
         
         # If API key is not configured in env/secrets, render input box
-        if not openai_key:
-            st.warning("⚠️ OPENAI_API_KEY not found in environment or secrets!")
-            openai_key = st.text_input("Configure OPENAI_API_KEY", type="password", help="Enter your OpenAI API Key")
-            if not openai_key:
-                st.info("👈 Please enter your OPENAI_API_KEY in the sidebar to proceed.")
+        if not euri_key:
+            st.warning("⚠️ EURI_API_KEY not found in environment or secrets!")
+            euri_key = st.text_input("Configure EURI_API_KEY", type="password", help="Enter your Euri API Key")
+            if not euri_key:
+                st.info("👈 Please enter your EURI_API_KEY in the sidebar to proceed.")
                 st.stop()
                 
         # Model Selection
         model = st.selectbox(
             "AI Agent Model",
-            ["gpt-4o-mini", "gpt-4o", "gpt-3.5-turbo"],
+            ["gpt-4.1-nano", "gpt-4o", "gpt-4o-mini", "gpt-3.5-turbo"],
             index=0
         )
         
         # Lazy initialization or re-initialization if model changes
-        if "agent" not in st.session_state or st.session_state.get("current_model") != model or st.session_state.get("current_key") != openai_key:
-            st.session_state.agent = InvoiceProcessingAgent(model_name=model, api_key=openai_key)
+        if "agent" not in st.session_state or st.session_state.get("current_model") != model or st.session_state.get("current_key") != euri_key:
+            st.session_state.agent = InvoiceProcessingAgent(model_name=model, api_key=euri_key)
             st.session_state.current_model = model
-            st.session_state.current_key = openai_key
+            st.session_state.current_key = euri_key
             
         if "ocr_reader" not in st.session_state:
             st.session_state.ocr_reader = OCRReader()
@@ -323,7 +323,7 @@ if check_password():
                 ocr_text = st.session_state.ocr_reader.read_text(temp_path)
             
             # Step 2: Agentic Processing (Clean & Extract)
-            with st.spinner("🤖 Step 2/3: Processing with AI agents..."):
+            with st.spinner("🤖 Step 2/3: Processing with Euri AI agents..."):
                 result = st.session_state.agent.process(
                     file_name=uploaded_file.name,
                     ocr_text=ocr_text
@@ -349,7 +349,7 @@ if check_password():
 
     # Main UI Header
     st.markdown('<h1 class="main-header">🤖 Agentic Invoice Processor</h1>', unsafe_allow_html=True)
-    st.markdown('<div class="subtitle">AI-powered invoice cleaning, extraction, and validation using LangGraph and OpenAI</div>', unsafe_allow_html=True)
+    st.markdown('<div class="subtitle">AI-powered invoice cleaning, extraction, and validation using EuriaiLangGraph</div>', unsafe_allow_html=True)
     
     # Navigation Tabs
     tab1, tab2, tab3 = st.tabs(["📤 Upload & Process", "📋 View Database", "📊 Analytics Hub"])
@@ -413,14 +413,13 @@ if check_password():
             # Pipeline nodes
             st.markdown('<h4 style="font-weight: 700; margin-top: 1rem;">🔄 Node Processing Summary</h4>', unsafe_allow_html=True)
             
-            errs_str = " ".join(latest_result.get("errors", []))
-            clean_success = "Clean error" not in errs_str
-            extract_success = "Extract error" not in errs_str
+            c_fallback = latest_result.get("clean_raw", {}).get("fallback", False)
+            e_fallback = latest_result.get("extract_raw", {}).get("fallback", False)
             
             steps = [
                 ("OCR Text Extraction", "✅", "Extracted text raw OCR symbols"),
-                ("Clean OCR Node", "✅ AI Cleaned" if clean_success else "❌ Failed", "Corrected characters and table structure using LLM"),
-                ("Extract JSON Node", "✅ AI Extracted" if extract_success else "❌ Failed", "Parsed fields into strict JSON schema using LLM"),
+                ("Clean OCR Node", "⚠️ Fallback Active" if c_fallback else "✅ AI Cleaned", "Corrected characters and table structure"),
+                ("Extract JSON Node", "⚠️ Fallback Active" if e_fallback else "✅ AI Extracted", "Parsed fields into strict JSON schema"),
                 ("Schema Validation Node", "✅ Passed" if latest_result["validation_status"] == "valid" else "⚠️ Warnings", "Validated numeric values and key completeness")
             ]
             
@@ -438,7 +437,7 @@ if check_password():
                 
             # Warnings/Errors Box
             if latest_result.get("errors"):
-                st.markdown('<h4 style="font-weight: 700; margin-top: 1.2rem;">⚠️ Validation Warnings / Errors</h4>', unsafe_allow_html=True)
+                st.markdown('<h4 style="font-weight: 700; margin-top: 1.2rem;">⚠️ Validation Warnings</h4>', unsafe_allow_html=True)
                 for err in latest_result["errors"]:
                     st.warning(f"• {err}")
                     
