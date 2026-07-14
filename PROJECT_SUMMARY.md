@@ -117,7 +117,3 @@ invoice_generator/
 2. Set OpenAI API key: `export OPENAI_API_KEY=your_key`
 3. Run the app: `python run.py` or `streamlit run app.py`
 4. Upload an invoice and watch the agents work!
-
----
-
-**Built with ❤️ as a complete, demo-ready, agentic invoice processing system**
