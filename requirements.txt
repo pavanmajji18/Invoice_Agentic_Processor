@@ -1,13 +1,6 @@
 streamlit>=1.28.0
-langgraph>=0.0.20
-langchain>=0.1.0
-langchain-openai>=0.0.5
+euriai[langgraph]>=1.0.32
 easyocr>=1.7.0
 opencv-python-headless>=4.8.0
-pillow>=10.0.0
 pandas>=2.0.0
-openai>=1.10.0
-numpy>=1.24.0
-torch>=2.0.0
 python-dotenv>=1.0.0
-euriai[langgraph]>=1.0.32
